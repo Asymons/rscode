@@ -5,30 +5,40 @@
 var flaxPrice = getRSBPrice("Flax") * 1000 / 1000;
 var cannonPrice = ((getRSBPrice("Cannonball") * 2160) - (getRSBPrice("Steel bar") * 540)) / 1000;
 var bakePotato = ((getRSBPrice("Baked potato") * 1300) - (getRSBPrice("Potato") * 1300)) / 1000;
-
+var cleanHerb = ((getRSBPrice("Lantadyme") * 2500) -  (getRSBPrice("Grimy lantadyme") * 2500)) / 1000;
+var cleanHerb2 = ((getRSBPrice("Toadflax") * 2500) -  (getRSBPrice("Grimy toadflax") * 2500)) / 1000;
 
 
 var skillReq = {
-    "Flax": {
-        "name": "Flax",
-        "id": null,
-        "skill": null,
-        "level": null
-    },
     "Cannonball": {
         "name": "Cannonball",
         "id": 14,
         "skill": "smithing",
         "level": 35
     },
-    "BakePotato":{
+    "BakePotato": {
         "name": "Potato",
         "id": 8,
         "skill": "cooking",
         "level": 7
     },
-    "Superglass":{
-        "name": ""
+    "SuperGlass": {
+        "name": "MoltenGlass",
+        "id": 7,
+        "skill": "magic",
+        "level": 77
+    },
+    "CleaningLantadyme": {
+        "name": "Lantadyme",
+        "id": 16,
+        "skill": "herblore",
+        "level": 67
+    },
+    "CleaningToadflax": {
+        "name": "Toadflax",
+        "id": 16,
+        "skill": "herblore",
+        "level": 30
     }
 
 };
@@ -57,16 +67,20 @@ function insertData(name, skill, level, quest, profit) {
 
 
 function checkInsertedData(name, skill, level, quest, profit, id) {
-    if(skill == null && level == null){
+    if (skill == null && level == null) {
         insertData(name, skill, level, quest, profit);
-    }else{
-        $.each(playerData, function(index, value){
-            //console.log(index + " " + value);
-            if (index === id && JSON.stringify(value.level) >= level) {
-                insertData(name, skill, level, quest, profit);
-                console.log("USER LEVEL: " + value.level);
-            }
+    } else {
+        var url = "http://localhost:8080/user?username=ExRuneSlayer";
+        $.getJSON(url, function (data) {
+            $.each(data, function (index, value) {
+                //console.log(index + " " + value);
+                if (index === id && JSON.stringify(value.level) >= level) {
+                    insertData(name, skill, level, quest, profit);
+                    console.log("USER LEVEL: " + value.level);
+                }
+            });
         });
+
     }
 }
 
@@ -74,7 +88,9 @@ function checkInsertedData(name, skill, level, quest, profit, id) {
 setTimeout(function () {
     checkInsertedData("Flax", null, null, null, flaxPrice + "k/h");
     checkInsertedData(skillReq.Cannonball.name, "smithing", skillReq.Cannonball.level, "Quest: Dwarf Cannon", cannonPrice + "k/h", 14);
-    checkInsertedData(skillReq.BakePotato.name, "cooking", skillReq.BakePotato.level, null, bakePotato+"k/h", 8);
+    checkInsertedData(skillReq.BakePotato.name, "cooking", skillReq.BakePotato.level, null, bakePotato + "k/h", 8);
+    checkInsertedData(skillReq.CleaningLantadyme.name,"herblore", skillReq.CleaningLantadyme.level, "Quest: Druid's Ritual", cleanHerb + "k/h", 16)
+    checkInsertedData(skillReq.CleaningToadflax.name,"herblore", skillReq.CleaningToadflax.level, "Quest: Druid's Ritual", cleanHerb2 + "k/h", 16)
 }, 500);
 
 

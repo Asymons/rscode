@@ -22,7 +22,8 @@ function getJSONHighscores(name){
     return playerObj;
 }
 
-var playerData = getJSONHighscores("ExRuneSlayer");
+
+var playerData = getJSONHighscores("");
 //setTimeout(function(){
 //    console.log(playerData);
 //},500);
