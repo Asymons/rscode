@@ -1,7 +1,7 @@
 /**
  * Created by Root on 2016-09-17.
  */
-var highscores = "http://projects.saltor.nyc:3030/player/"
+var highscores = "http://projects.saltor.nyc:3030/player/";
 
 /*
  @link - Insert the link of the address to receive JSON data.
@@ -18,8 +18,15 @@ function getJSON(link){
 function getJSONHighscores(name){
     highscores = highscores + name;
     var player = getJSON(highscores);
-    return player;
+    var playerObj = JSON.parse(player);
+    return playerObj;
 }
 
-console.log(getJSONHighscores("ExRuneSlayer"));
+var playerData = getJSONHighscores("ExRuneSlayer");
+//setTimeout(function(){
+//    console.log(playerData);
+//},500);
+//$.each(playerData, function(index, value){
+//    console.log(index + " " + JSON.stringify(value.skill) + ":" + JSON.stringify(value.level));
+//});
 

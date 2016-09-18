@@ -1,8 +1,8 @@
 /**
  * Created by Root on 2016-09-17.
  */
-var osexchange = "http://api.rsbuddy.com/grandExchange?a=guidePrice&i=";
-var osgrandexchange =  "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+
+
 var itemlist = "https://api.myjson.com/bins/48mdq";
 
 /*
@@ -35,14 +35,15 @@ function getJSON(link){
 @item - Insert either the item name or id to receive JSON data from RSBuddy.
  */
 function getRSBJSON(item){
+
     if(item%1 === 0){
-        osexchange = osexchange + item;
-        console.log(getJSON(osexchange));
+        var osexchange = "http://api.rsbuddy.com/grandExchange?a=guidePrice&i=" + item;
+        //console.log(getJSON(osexchange));
         return JSON.parse(getJSON(osexchange));
     }else{
         var id = getItem(item);
-        osexchange = osexchange + id;
-        console.log(getJSON(osexchange));
+        var osexchange = "http://api.rsbuddy.com/grandExchange?a=guidePrice&i=" + id;
+        //console.log(getJSON(osexchange));
         return JSON.parse(getJSON(osexchange));
     }
 }
@@ -51,14 +52,27 @@ function getRSBJSON(item){
  */
 function getGEJSON(item){
     if(item%1 === 0){
-        osgrandexchange = osgrandexchange + item;
-        console.log(getJSON(osgrandexchange));
+        var osgrandexchange =  "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item="+ item;
+        //console.log(getJSON(osgrandexchange));
         return JSON.parse(getJSON(osgrandexchange));
     }else{
         var id = getItem(item);
-        osgrandexchange = osgrandexchange + id;
-        console.log(getJSON(osgrandexchange));
+        var osgrandexchange =  "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=" + id;
+        //console.log(getJSON(osgrandexchange));
         return JSON.parse(getJSON(osgrandexchange));
     }
 
 }
+
+
+function getRSBPrice(item){
+    return getRSBJSON(item).buying;
+}
+
+function getGEPrice(item){
+    //console.log(getGEJSON(item));
+    return getGEJSON(item);
+}
+
+//console.log(getRSBPrice("Flax"));
+//alert('hi');
